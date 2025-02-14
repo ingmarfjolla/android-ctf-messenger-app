@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp"
+    android:orientation="horizontal">
+    <!-- Avatar ImageView -->
+    <ImageView
+        android:id="@+id/ivAvatar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/avatar"
+        android:contentDescription="avatar"
+        android:layout_gravity="top"
+        android:layout_marginEnd="8dp" />
+    <!-- Container for Name and Message Bubble -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- hardcoded name for the chat -->
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rudolf Abel"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:textSize="14sp" />
+
+        <!-- message bubble -->
+        <TextView
+            android:id="@+id/tvMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/bg_chat_left"
+            android:padding="12dp"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+    </LinearLayout>
+    <!-- old chat when i didn't have the chat avatar -->
+<!--    <TextView-->
+<!--        android:id="@+id/tvMessage"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@drawable/bg_chat_left"-->
+<!--        android:padding="12dp"-->
+<!--        android:textColor="#000000"-->
+<!--        android:textSize="16sp" />-->
+
+</LinearLayout>
