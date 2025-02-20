@@ -37,8 +37,9 @@ jobs:
             touch emulator.log                    # create log file
             chmod 777 emulator.log                # allow writing to log file
             adb logcat >> emulator.log &          # pipe all logcat messages into log file as a background process
+            adb root
             adb push frida-server /data/local/tmp/
-            adb shell "su -c chmod 755 /data/local/tmp/frida-server"
-            adb shell "su -c /data/local/tmp/frida-server &"
+            adb shell "chmod 755 /data/local/tmp/frida-server"
+            adb shell "/data/local/tmp/frida-server &"
             frida -U -f com.example.myapplication -l build.js
             ./gradlew connectedCheck
