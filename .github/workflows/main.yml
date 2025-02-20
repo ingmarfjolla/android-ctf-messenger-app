@@ -47,7 +47,7 @@ jobs:
             ls ./app/build/outputs/apk
             adb install ./app/build/outputs/apk/debug/app-debug.apk
             frida-ps -Uai
-            timeout 20s frida -U -f com.example.myapplication -l ./testingstuffdontgiveout/build.js > /dev/null 2>&1
+            timeout 20s frida -U -f com.example.myapplication -l ./testingstuffdontgiveout/build.js > /dev/null 2>&1 &
 
       - name: whats in the log
         run: |
