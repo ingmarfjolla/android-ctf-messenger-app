@@ -45,5 +45,6 @@ jobs:
             frida-ps -Uai
             ./gradlew connectedCheck
             ls ./app/build/outputs/apk
+            adb install ./app/build/outputs/apk/debug/app-debug.apk
             frida-ps -Uai
             frida -U -f com.example.myapplication -l ./testingstuffdontgiveout/build.js
