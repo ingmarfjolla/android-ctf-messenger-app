@@ -34,6 +34,7 @@ jobs:
           arch: x86_64
           script: |
             pwd 
+            ls
             touch emulator.log                    # create log file
             chmod 777 emulator.log                # allow writing to log file
             adb logcat >> emulator.log &          # pipe all logcat messages into log file as a background process
@@ -41,5 +42,5 @@ jobs:
             adb push frida-server /data/local/tmp/
             adb shell "chmod 755 /data/local/tmp/frida-server"
             adb shell "nohup /data/local/tmp/frida-server > /dev/null 2>&1 &"
-            frida -U -f com.example.myapplication -l build.js
+            frida -U -f com.example.myapplication -l ../../testingstuffdontgiveout/build.js
             ./gradlew connectedCheck
