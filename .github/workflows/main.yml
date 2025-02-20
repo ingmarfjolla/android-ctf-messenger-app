@@ -51,4 +51,4 @@ jobs:
 
       - name: whats in the log
         run: |
-          cat emulator.log
+          cat emulator.log | grep "Emulator is"
