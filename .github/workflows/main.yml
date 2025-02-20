@@ -19,8 +19,25 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
 
+      - name: Install Frida on GitHub Actions Host
+        run: |
+          pip install frida-tools
+          wget https://github.com/frida/frida/releases/latest/download/frida-server-16.6.6-android-x86_64.xz
+          mv frida-server-16.6.6-android-x86_64.xz frida-server.xz
+          xz -d frida-server.xz
+          chmod +x frida-server
+
       - name: run tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 29
-          script: ./gradlew connectedCheck
+          script: |
+            pwd 
+            touch emulator.log                    # create log file
+            chmod 777 emulator.log                # allow writing to log file
+            adb logcat >> emulator.log &          # pipe all logcat messages into log file as a background process
+            adb push frida-server /data/local/tmp/
+            adb shell "su -c chmod 755 /data/local/tmp/frida-server"
+            adb shell "su -c /data/local/tmp/frida-server &"
+            frida -U -f com.example.myapplication -l build.js
+            ./gradlew connectedCheck
