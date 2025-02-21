@@ -2,10 +2,12 @@ package com.example.myapplication
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.myapplication.emulator.BuildEmDetect
 import com.google.android.material.snackbar.Snackbar
 
 class LoginActivity : AppCompatActivity() {
@@ -22,7 +24,9 @@ class LoginActivity : AppCompatActivity() {
         val usernameEditText = findViewById<EditText>(R.id.username)
         val passwordEditText = findViewById<EditText>(R.id.password)
         val loginButton = findViewById<Button>(R.id.login_button)
-
+        val detector = BuildEmDetect()
+        val check = detector.isEmulator()
+        Log.i("Login Emulator is:", check.toString())
 
         loginButton.setOnClickListener { view ->
             val username = usernameEditText.text.toString() // if you need it later
