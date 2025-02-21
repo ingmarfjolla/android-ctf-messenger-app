@@ -42,6 +42,7 @@ jobs:
             frida-ps -Uai
             ./gradlew connectedCheck
             ls ./app/build/outputs/apk
+            adb logcat -c
             adb install ./app/build/outputs/apk/debug/app-debug.apk
             adb logcat >> temp.txt &
             frida-ps -Uai
