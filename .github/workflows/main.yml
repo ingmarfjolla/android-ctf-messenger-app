@@ -52,4 +52,4 @@ jobs:
 
       - name: whats in the log
         run: |
-          cat tempt.txt | grep "Emulator is"
+          cat temp.txt | grep "Emulator is"
