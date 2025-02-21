@@ -35,9 +35,6 @@ jobs:
           script: |
             pwd 
             ls
-            touch emulator.log                    # create log file
-            chmod 777 emulator.log                # allow writing to log file
-            adb logcat >> emulator.log &          # pipe all logcat messages into log file as a background process
             adb root
             adb push frida-server /data/local/tmp/
             adb shell "chmod 755 /data/local/tmp/frida-server"
@@ -52,4 +49,5 @@ jobs:
 
       - name: whats in the log
         run: |
-          cat temp.txt 
+          sleep 5
+          cat temp.txt | grep "Emulator is"
