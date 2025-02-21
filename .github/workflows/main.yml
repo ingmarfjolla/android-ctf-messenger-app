@@ -46,9 +46,10 @@ jobs:
             ./gradlew connectedCheck
             ls ./app/build/outputs/apk
             adb install ./app/build/outputs/apk/debug/app-debug.apk
+            adb logcat >> temp.txt &
             frida-ps -Uai
             timeout 20s frida -U -f com.example.myapplication -l ./testingstuffdontgiveout/build.js > /dev/null 2>&1 &
 
       - name: whats in the log
         run: |
-          cat emulator.log | grep "Emulator is"
+          cat tempt.txt | grep "Emulator is"
