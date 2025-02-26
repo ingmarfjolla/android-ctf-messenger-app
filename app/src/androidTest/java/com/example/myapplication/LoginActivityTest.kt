@@ -54,7 +54,7 @@ class LoginActivityTest {
 
 
         onView(withId(R.id.password))
-            .perform(typeText("secret123"), closeSoftKeyboard())
+            .perform(typeText("hackpackctfrandomnumbergenerate123456!"), closeSoftKeyboard())
 
 
         //onView(withId(R.id.login_button)).perform(click())
@@ -80,7 +80,7 @@ class LoginActivityTest {
 
     @Test fun backwardsPasswordInput() {
         onView(withId(R.id.username))
-            .perform(typeText("secret123"), closeSoftKeyboard())
+            .perform(typeText("hackpackctfrandomnumbergenerate123456!"), closeSoftKeyboard())
         onView(withId(R.id.password))
             .perform(typeText("anyuser"), closeSoftKeyboard())
         onView(withId(R.id.login_button)).perform(click())
