@@ -1,10 +1,12 @@
 package com.example.myapplication
 
+import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
 import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
@@ -50,9 +52,14 @@ class ChatActivityTest {
         onView(withId(R.id.btnSend))
             .perform(click())
 
+        onView(withId(R.id.recyclerView))
+            .perform(RecyclerViewActions.scrollTo<RecyclerView.ViewHolder>(hasDescendant(withText("Hello"))))
 
         onView(withId(R.id.recyclerView))
             .check(matches(hasDescendant(withText("Hello"))))
+
+        onView(withId(R.id.recyclerView))
+            .perform(RecyclerViewActions.scrollTo<RecyclerView.ViewHolder>(hasDescendant(withText("Americanski I know u are using an emulator!"))))
 
         onView(withId(R.id.recyclerView))
             .check(matches(hasDescendant(withText(startsWith("Americanski I know u are using an emulator!")))))
