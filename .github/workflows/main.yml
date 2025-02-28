@@ -54,4 +54,4 @@ jobs:
           cat temp.txt
       - name: grep test
         run: |
-          cat temp.txt | grep "Login Emulator is false"
+          cat temp.txt | grep "Login Emulator is:: false"
