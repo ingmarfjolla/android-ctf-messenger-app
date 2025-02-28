@@ -46,7 +46,7 @@ jobs:
             adb install ./app/build/outputs/apk/debug/app-debug.apk
             adb logcat >> temp.txt &
             frida-ps -Uai
-            frida -U -f com.example.myapplication -l ./testingstuffdontgiveout/build.js >> err.txt &
+            frida -U -f com.example.myapplication -l ./testingstuffdontgiveout/exploit.js >> err.txt &
 
       - name: whats in the log
         run: |
@@ -54,4 +54,4 @@ jobs:
           cat temp.txt
       - name: grep test
         run: |
-          cat temp.txt | grep "Login Emulator is"
+          cat temp.txt | grep "Login Emulator is false"

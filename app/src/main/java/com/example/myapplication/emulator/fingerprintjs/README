@@ -1,0 +1,4 @@
+Files in here are mostly borrowed code from the https://github.com/fingerprintjs/fingerprintjs-android/ library.
+
+Instead of using the library directly I wanted to make the CTF a bit more straightforward and include
+some of the code. but not all of it.

@@ -25,9 +25,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val splashLogo = findViewById<ImageView>(R.id.splashLogo)
-        val detector = BuildEmDetect()
-        val check = detector.isEmulator()
-        Log.i("Emulator is:", check.toString())
         ObjectAnimator.ofFloat(splashLogo, "rotation", 0f, 360f).apply {
             duration = 4000  // 1 second per rotation
             repeatCount = ObjectAnimator.INFINITE

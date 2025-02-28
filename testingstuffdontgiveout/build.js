@@ -1,11 +1,10 @@
 
-// source : https://github.com/rsenet/FriList/blob/main/02_SecurityBypass/DebugMode_Emulator/android-emulator-detection-bypass.js#L32
+// partially sourced from : https://github.com/rsenet/FriList/blob/main/02_SecurityBypass/DebugMode_Emulator/android-emulator-detection-bypass.js#L32
 Java.perform(function()
 {
     console.log("--> Anti Emulator Detection Bypass (aka BluePill) - Script Loaded")
 
     bypass_build_properties()
-
 });
 
 
@@ -36,4 +35,24 @@ function bypass_build_properties()
         replaceFinaleField(Build, "SERIAL", "abcdef123")
         replaceFinaleField(Build, "TAGS", "release-keys")
         replaceFinaleField(Build, "USER", "administrator")
+}
+
+
+
+if (Module.findExportByName("libc.so", "open") !== null) {
+    Interceptor.attach(Module.findExportByName("libc.so", "open"), {
+        onEnter: function (args) {
+            var path = Memory.readCString(args[0]);
+            console.log("open() called with: " + path);
+            // Optionally, check if the file path is one you want to block:
+            if(path.indexOf("/proc/self/task/") !== -1){ this.block = true; }
+            //this.block = true; // Block all open calls, for demonstration.
+        },
+        onLeave: function (retval) {
+            if (this.block) {
+                console.log("Blocking file access. Returning error (-1).");
+                retval.replace(-1);
+            }
+        }
+    });
 }

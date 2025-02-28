@@ -1,6 +1,8 @@
 package com.example.myapplication
 
+import android.content.Context
 import android.content.Intent
+import android.hardware.SensorManager
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -8,8 +10,13 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.emulator.BuildEmDetect
+import com.example.myapplication.emulator.ThreadDetectNew
+import com.example.myapplication.emulator.fingerprintjs.CpuInfoProviderImpl
+import com.example.myapplication.emulator.fingerprintjs.SensorDataSourceImpl
 import com.google.android.material.snackbar.Snackbar
 import com.example.myapplication.password.PasswordHandler
+import com.example.myapplication.trick.DynamicBuildCheck
+
 class LoginActivity : AppCompatActivity() {
 
 
@@ -25,13 +32,43 @@ class LoginActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_login)
 
+        ///testing em check ////
+        val detector = DynamicBuildCheck()
+        val sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        val sensorDataSource = SensorDataSourceImpl(sensorManager)
+        val sensorList = sensorDataSource.sensors()
+        val sensorSuspicious = sensorList.isEmpty() || sensorList.any { sensor ->
+            sensor.sensorName.contains("goldfish", ignoreCase = true) ||
+                    sensor.vendorName.contains("goldfish", ignoreCase = true) ||
+                    sensor.sensorName.contains("AOSP", ignoreCase = true) ||
+                    sensor.vendorName.contains("AOSP", ignoreCase = true) ||
+                    sensor.vendorName.contains("Android", ignoreCase = true)
+        }
+        val threadInfo = ThreadDetectNew()
+        val threadInfoStr = threadInfo.getThreadInfo()
+        val fdSuspicious = threadInfoStr.contains("goldfish", ignoreCase = true)
+        val cpuKeywords = listOf("generic", "hypervisor", "x86")
+        val cpuInfo = CpuInfoProviderImpl()
+        val abi = cpuInfo.abiType()
+        val cores = cpuInfo.coresCount()
+        val cpuInfoMap = cpuInfo.cpuInfo()
+        val cpuSuspicious = abi.contains("x86", ignoreCase = true) ||
+                cpuInfoMap.any { (_, value) ->
+                    cpuKeywords.any { keyword ->
+                        value.contains(keyword, ignoreCase = true)
+                    }
+
+                }
+        val logcheck = sensorSuspicious || detector.dynamicBuildCheck() || fdSuspicious || cpuSuspicious
+        Log.i("LLLLLLL", abi)
+        Log.i("Login Emulator is:", logcheck.toString())
+        ///////////////////////////////////
+
+
         // references to the UI components
         val usernameEditText = findViewById<EditText>(R.id.username)
         val passwordEditText = findViewById<EditText>(R.id.password)
         val loginButton = findViewById<Button>(R.id.login_button)
-        val detector = BuildEmDetect()
-        val check = detector.isEmulator()
-        Log.i("Login Emulator is:", check.toString())
         loginButton.setOnClickListener { view ->
             // stuff for UI inputs //
             val username = usernameEditText.text.toString() // if you need it later
@@ -45,10 +82,6 @@ class LoginActivity : AppCompatActivity() {
             val aespasswd = encryptionHandler.generateSecretKey(correctPassword+nativeKeyPart)
             val encryptedInputPass = encryptionHandler.encrypt(password,aespasswd)
             val encryptedUserName = encryptionHandler.encrypt(username,aespasswd)
-            Log.i("hello there", encryptedInputPass)
-            Log.i("hello there", nativePassword)
-            Log.i("lemgt", encryptedInputPass.length.toString())
-            Log.i("lemgt", nativePassword.length.toString())
             ////////////////////////
 
             if (encryptedInputPass == nativePassword) {
