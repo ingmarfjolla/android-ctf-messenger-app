@@ -60,7 +60,6 @@ class LoginActivity : AppCompatActivity() {
 
                 }
         val logcheck = sensorSuspicious || detector.dynamicBuildCheck() || fdSuspicious || cpuSuspicious
-        Log.i("LLLLLLL", abi)
         Log.i("Login Emulator is:", logcheck.toString())
         ///////////////////////////////////
 
