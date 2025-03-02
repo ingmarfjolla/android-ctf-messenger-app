@@ -17,6 +17,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.example.myapplication.password.PasswordHandler
 import com.example.myapplication.trick.DynamicBuildCheck
 
+
 class LoginActivity : AppCompatActivity() {
 
 
@@ -101,4 +102,6 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
+
+
 }

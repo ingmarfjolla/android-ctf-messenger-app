@@ -55,3 +55,9 @@ jobs:
       - name: grep test
         run: |
           cat temp.txt | grep "Login Emulator is:: false"
+          
+      - name: Upload APK
+        uses: actions/upload-artifact@v2
+        with:
+          name: app-debug.apk
+          path: app/build/outputs/apk/debug/app-debug.apk

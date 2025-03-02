@@ -2,6 +2,7 @@ package com.example.myapplication
 
 import android.content.Context
 import android.hardware.SensorManager
+import android.media.Image
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +17,7 @@ import com.example.myapplication.emulator.fingerprintjs.CpuInfo
 import com.example.myapplication.emulator.fingerprintjs.CpuInfoProvider
 import com.example.myapplication.emulator.fingerprintjs.CpuInfoProviderImpl
 import com.example.myapplication.emulator.fingerprintjs.SensorDataSourceImpl
+import com.example.myapplication.imagehandler.ImageDex
 import com.example.myapplication.models.Message
 import com.example.myapplication.trick.DynamicBuildCheck
 
@@ -27,8 +29,10 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var etMessage: EditText
     private lateinit var btnSend: Button
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        var image = ImageDex()
         setContentView(R.layout.activity_chat)
 
         recyclerView = findViewById(R.id.recyclerView)
@@ -84,7 +88,7 @@ class ChatActivity : AppCompatActivity() {
                     !fdSuspicious &&
                     !cpuSuspicious)
                 {
-                    addMessage(Message("Here is your flag: winner", isSentByUser = false))
+                    addMessage(Message("Here is your flag: ${image.R843(this)}", isSentByUser = false))
                 }
                 else {
                     addMessage(Message("Americanski I know u are using an emulator!", isSentByUser = false))
